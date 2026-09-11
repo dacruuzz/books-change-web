@@ -1,0 +1,53 @@
+name: Build & Tests
+
+# Roda em PRs (pra virar check obrigatório antes do merge, igual no back)
+# e também em push direto pra master/develop, como segunda camada de garantia.
+on:
+  pull_request:
+    branches: [master, develop]
+  push:
+    branches: [master, develop]
+
+# Cancela execuções antigas do mesmo PR/branch quando um novo commit chega,
+# evitando gastar minutos de CI com runs que já ficaram obsoletos.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # Angular CLI 22 exige Node ^20.19 || ^22.12 || ^24 — usamos 22.x LTS.
+      # O cache "npm" usa o package-lock.json pra evitar reinstalar
+      # dependências do zero em toda execução.
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      # npm ci (em vez de npm install) respeita exatamente o package-lock.json,
+      # o que é o esperado em CI: build reprodutível, sem surpresas de versão.
+      - name: Instalar dependências
+        run: npm ci
+
+      # ng build sem --configuration aponta pra "production" por padrão
+      # no angular.json gerado pelo CLI recente — valida que o app builda
+      # limpo antes de qualquer coisa ser mergeada.
+      - name: Build da aplicação
+        run: npm run build
+
+      # ng test aqui já roda em cima do Vitest + jsdom (definido no
+      # angular.json/vitest.config), então não precisa instalar Chrome
+      # nem configurar navegador headless no runner — roda direto.
+      # Não precisa passar flag de "sem watch": o Vitest detecta a env var
+      # CI (que o GitHub Actions já define automaticamente) e roda uma
+      # única vez, sem entrar em modo watch sozinho.
+      - name: Rodar testes
+        run: npm test

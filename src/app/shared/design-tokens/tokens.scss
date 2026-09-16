@@ -1,0 +1,209 @@
+// src/app/shared/design-tokens/_tokens.scss
+// Tokens agnósticos de framework — Design System v1.1
+// O tema do Angular Material consome estas variáveis, nunca o inverso.
+
+:root {
+  // ─────────────────────────────────────────────
+  // Base
+  // ─────────────────────────────────────────────
+  --color-background: #FAF8F5;
+  --color-foreground: #28231C;
+
+  --color-card: #FFFFFF;
+  --color-card-foreground: #28231C;
+
+  --color-muted: #ECE7DF;
+  --color-muted-foreground: #6E685E;
+
+  // Regra do projeto: --color-border é decorativa;
+  // --color-border-input é para elementos de formulário.
+  --color-border: #DCD7CF;
+  --color-border-input: #AEA394;
+
+  // ─────────────────────────────────────────────
+  // Botões
+  // ─────────────────────────────────────────────
+  --color-primary: #BA5A42;
+  --color-primary-foreground: #FDFCF9;
+
+  --color-secondary: #225176;
+  --color-secondary-foreground: #FDFCF9;
+
+  --color-destructive: #D42F34;
+  --color-destructive-foreground: #FDFCF9;
+
+  // Accent (âmbar) — SEMPRE como fundo com texto escuro por cima,
+  // nunca como cor de texto/ícone isolada.
+  --color-accent: #E0A26F;
+  --color-accent-foreground: #28231C;
+
+  // Outline / Text — fundo transparente (usa --color-background),
+  // borda usa --color-border-input, texto usa secondary
+  --color-outline-foreground: #225176;
+  --color-text-button-foreground: #225176; // v1.1 unificou com outline — confirmar se é intencional
+
+  // ─────────────────────────────────────────────
+  // Badges (fundo + texto)
+  // ─────────────────────────────────────────────
+  --color-badge-available-bg: #DBEEDE;
+  --color-badge-available-fg: #225A31;
+
+  --color-badge-reserved-bg: var(--color-accent); // #E0A26F
+  --color-badge-reserved-fg: var(--color-accent-foreground);
+
+  --color-badge-proposal-bg: #DBEAF8;
+  --color-badge-proposal-fg: #225176;
+
+  --color-badge-completed-bg: #FBE6E0;
+  --color-badge-completed-fg: #BA5A42;
+
+  --color-badge-warning-bg: #FBE8CE;
+  --color-badge-warning-fg: #53320B;
+  --color-badge-warning-border: #9D6300;
+
+  --color-badge-canceled-bg: #FFE3DF;
+  --color-badge-canceled-fg: #D42F34;
+  --color-badge-canceled-border: color-mix(in srgb, #D42F34 25%, transparent);
+
+  --color-badge-neutral-bg: var(--color-muted);
+  --color-badge-neutral-fg: var(--color-muted-foreground);
+
+  // Referências extras
+  --color-warning: #9D6300;
+  --color-success: #225A31;
+  --color-ring: color-mix(in srgb, #BA5A42 45%, transparent);
+
+  // ─────────────────────────────────────────────
+  // Raio
+  // ─────────────────────────────────────────────
+  --radius: 0.75rem; // 12px — base do design system
+  --radius-full: 999px;
+
+  // ─────────────────────────────────────────────
+  // Tamanhos — Botão
+  // ─────────────────────────────────────────────
+  --button-height-sm: 32px;
+  --button-padding-x-sm: 12px;
+  --button-font-size-sm: 13px;
+
+  --button-height-md: 40px;
+  --button-padding-x-md: 16px;
+  --button-font-size-md: 14px;
+
+  --button-height-lg: 48px;
+  --button-padding-x-lg: 24px;
+  --button-font-size-lg: 16px;
+
+  --button-size-icon: 40px;
+  --button-size-fab: 56px;
+
+  --button-radius: var(--radius);       // sm/md/lg/icon
+  --button-radius-fab: var(--radius-full);
+
+  // ─────────────────────────────────────────────
+  // Tamanhos — Chip / Badge / Card
+  // ─────────────────────────────────────────────
+  --chip-height: 32px;
+  --chip-padding-x: 12px;
+  --chip-font-size: 13px;
+  --chip-radius: var(--radius-full);
+
+  --badge-height-min: 24px;
+  --badge-padding-x: 10px;
+  --badge-font-size: 12px;
+  --badge-radius: var(--radius-full);
+
+  --card-padding: 16px;
+  --card-radius: var(--radius);
+
+  // ─────────────────────────────────────────────
+  // Tipografia
+  // ─────────────────────────────────────────────
+  --font-family-display: 'Merriweather', Georgia, serif;
+  --font-family-body: 'Roboto', system-ui, sans-serif;
+
+  --font-size-card-title: 22px;
+  --font-weight-card-title: 600;
+
+  --font-size-page-title: 32px; // faixa 30–36px, usando ponto médio
+  --font-weight-page-title: 700;
+
+  --font-size-body: 14px;
+  --font-weight-body: 400;
+
+  --font-size-auxiliary: 13px;
+  --font-weight-auxiliary: 400;
+
+  --font-size-badge: 12px;
+  --font-weight-badge: 500;
+}
+
+// ─────────────────────────────────────────────
+// Dark mode — prefers-color-scheme automático,
+// com override manual via data-theme (toggle futuro)
+// ─────────────────────────────────────────────
+@mixin dark-theme-tokens {
+  --color-background: #16110A;
+  --color-foreground: #EFEBE4;
+
+  --color-card: #241E16;
+  --color-card-foreground: #EFEBE4;
+
+  --color-muted: #332D24;
+  --color-muted-foreground: #A9A49C;
+
+  --color-border: rgba(255, 255, 255, 0.12);
+  --color-border-input: #9D978E;
+
+  --color-primary: #DC785F;
+  --color-primary-foreground: #16110A;
+
+  --color-secondary: #4077A3;
+  --color-secondary-foreground: #FDFCF9;
+
+  --color-destructive: #E85854;
+  --color-destructive-foreground: #FDFCF9;
+
+  --color-accent: #D39562;
+  --color-accent-foreground: #16110A;
+
+  --color-outline-foreground: #4077A3;
+  --color-text-button-foreground: #4077A3;
+
+  --color-badge-available-bg: #1A2E1E;
+  --color-badge-available-fg: #7BB587;
+
+  --color-badge-reserved-bg: var(--color-accent);
+  --color-badge-reserved-fg: var(--color-accent-foreground);
+
+  --color-badge-proposal-bg: #1C3041;
+  --color-badge-proposal-fg: #4077A3;
+
+  --color-badge-completed-bg: #43241C;
+  --color-badge-completed-fg: #DC785F;
+
+  --color-badge-warning-bg: #3E290F;
+  --color-badge-warning-fg: #F7D19C;
+  --color-badge-warning-border: #DAA668;
+
+  --color-badge-canceled-bg: #47211E;
+  --color-badge-canceled-fg: #E85854;
+  --color-badge-canceled-border: color-mix(in srgb, #E85854 25%, transparent);
+
+  --color-badge-neutral-bg: var(--color-muted);
+  --color-badge-neutral-fg: var(--color-muted-foreground);
+
+  --color-warning: #DAA668;
+  --color-success: #7BB587;
+  --color-ring: color-mix(in srgb, #DC785F 50%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    @include dark-theme-tokens;
+  }
+}
+
+[data-theme='dark'] {
+  @include dark-theme-tokens;
+}
